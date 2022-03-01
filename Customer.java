@@ -1,4 +1,4 @@
-package project0;
+package project0.project0git;
 import java.util.Scanner;
 public class Customer {
     int[] accounts=new int[50];
