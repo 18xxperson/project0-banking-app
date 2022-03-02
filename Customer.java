@@ -19,18 +19,26 @@ public class Customer {
 			System.out.println("Create a password");
 			c.password=s.nextLine();
 		}
+		int counter=0;
+		do
+		{
 		System.out.println("Enter username");
 		String userName=s.nextLine();
 		System.out.println("Enter password");
 		String password=s.nextLine();
+		
 		if(Employee.test_inputs(userName, password,c)==true)
 		{
 			System.out.println("Login success");
+			Employee.functionality(c);
+			return;
 		}
 		else
 		{
 			System.out.println("Either the username or password is incorrect");
+			counter++;
 		}
+		}while(counter<15);
 	}
 
 }
