@@ -1,26 +1,33 @@
 package project0;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Employee extends Customer{
-	 
-	 public static boolean test_inputs(String user,String password,Customer c)
-	    {
-	    	if(user.equals(c.username)&&password.equals(c.password))
-	    	{
-	    		return true;
-	    	}
-	    	return false;
-	    }
-	 
-	 public static void functionality(Customer c)
-	 {
-		 Scanner s=new Scanner(System.in);
-		 System.out.println("Would you like to set up a new account, deposit into existing account or withdraw from existing account?");
-		 String action=s.nextLine(); 
+	static int numrequests=0;
+    static ArrayList<Request>requests=new ArrayList<Request>();
+	
+	  public static void add_to_accountrequests(Customer c, int amount)
+	  {
+		    Request r=new Request();
+	    	r.id=c.numaccounts;
+	    	r.name=c.username;
+	    	r.amount=amount;
+	    	requests.add(r);
+	  }
+	  public static void functionality(Customer c) {
+	  Scanner s=new Scanner(System.in);
+		 System.out.println("Press 1 for New account,\nPress 2 for Deposit into existing account, Press 3 for Withdraw from existing account");
+		 int action=s.nextInt(); 
 		 switch(action)
 		 {
-		    case "Deposit":
+		    case 1:
+		    {
+		    	System.out.println("Your request has been sent");
+		    	Employee.add_to_accountrequests(c,0);
+		    	return;
+		    }
+		    case 2:
 		    {
 			   if(c.numaccounts==0)
 			   {
@@ -28,13 +35,32 @@ public class Employee extends Customer{
 			   }
 			   else
 			   {
-				  
+				 System.out.println("How much would you like to deposit?");
+				 int amount=s.nextInt();
+				 System.out.println("Your request has been sent");
+				 Employee.add_to_accountrequests(c, amount);
 			   }
+			   return;
+		    }
+		    case 3:
+		    {
+		    	if(c.numaccounts==0)
+		    	{
+		    		System.out.println("Cannot withdraw at this time");
+		    	}
+		    	else
+		    	{
+		    		System.out.println("How much would you like to withdraw?");
+					 int amount=s.nextInt();
+					 System.out.println("Your request has been sent");
+					 Employee.add_to_accountrequests(c, -amount);
+		    	}
+		    	return;
 		    }
 		 }
 	 }
 	 
-	 public void approve_request(Request r)
+	 public void approve_request()
 	 {
 		 
 	 }
