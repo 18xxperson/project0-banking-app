@@ -1,6 +1,8 @@
 package project0;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable{
    int id=0;
    String name="";
    int amount=0;

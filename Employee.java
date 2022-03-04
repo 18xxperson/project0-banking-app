@@ -1,10 +1,14 @@
 package project0;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class Employee extends Customer{
-	static int numrequests=0;
+public class Employee extends Customer implements Serializable{
     static ArrayList<Request>requests=new ArrayList<Request>();
 	
 	  public static void add_to_accountrequests(Customer c, int amount)
@@ -14,55 +18,33 @@ public class Employee extends Customer{
 	    	r.name=c.username;
 	    	r.amount=amount;
 	    	requests.add(r);
+	    	try
+			{
+				FileOutputStream fileOut=new FileOutputStream("./src/project0/serialization.ser");
+				ObjectOutputStream out=new ObjectOutputStream(fileOut);
+				out.writeObject(requests);
+				out.close();
+				fileOut.close();
+			}
+			catch(IOException ex)
+			{
+				ex.printStackTrace();
+			}
 	  }
-	  public static void functionality(Customer c) {
-	  Scanner s=new Scanner(System.in);
-		 System.out.println("Press 1 for New account,\nPress 2 for Deposit into existing account, Press 3 for Withdraw from existing account");
-		 int action=s.nextInt(); 
-		 switch(action)
-		 {
-		    case 1:
-		    {
-		    	System.out.println("Your request has been sent");
-		    	Employee.add_to_accountrequests(c,0);
-		    	return;
-		    }
-		    case 2:
-		    {
-			   if(c.numaccounts==0)
-			   {
-				   System.out.println("Cannot deposit at this time");
-			   }
-			   else
-			   {
-				 System.out.println("How much would you like to deposit?");
-				 int amount=s.nextInt();
-				 System.out.println("Your request has been sent");
-				 Employee.add_to_accountrequests(c, amount);
-			   }
-			   return;
-		    }
-		    case 3:
-		    {
-		    	if(c.numaccounts==0)
-		    	{
-		    		System.out.println("Cannot withdraw at this time");
-		    	}
-		    	else
-		    	{
-		    		System.out.println("How much would you like to withdraw?");
-					 int amount=s.nextInt();
-					 System.out.println("Your request has been sent");
-					 Employee.add_to_accountrequests(c, -amount);
-		    	}
-		    	return;
-		    }
-		 }
-	 }
 	 
-	 public void approve_request()
+	 
+	 public void approve_requests()
 	 {
-		 
+		 Scanner s=new Scanner(System.in);
+		 Iterator<Request> itr=requests.iterator();
+	    	while(itr.hasNext())
+	    	{
+	    		System.out.println("Would you like to approve this request?\n Type y for yes, Type n for no");
+	    		String a=s.nextLine();
+	    		if(a.equals("y"))
+	    		   itr.next().approved=true;
+	    		itr.next().lookedat=true;
+	    	}
 	 }
 	
 	 

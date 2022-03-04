@@ -1,26 +1,54 @@
 package project0;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.*;
 public class Customer implements Serializable{
-    ArrayList<Integer> accounts=new ArrayList<Integer>();  
+    Map<Integer,Integer> accounts=new HashMap<Integer,Integer>();  
     int numaccounts=0;
     String username="";
     String password="";
+    ArrayList<Request> transactions=new ArrayList<Request>();
     public static void main(String[] args) {
 		Scanner s=new Scanner(System.in);
 		System.out.println("Press 1 for new person, Press 2 for current user");
 		String newc=s.nextLine();
-		Customer c=new Customer();
+		//System.out.println("Press 1 for Customer, press 2 for employee, press 3 for admin");
+		//String access=s.nextLine();
+		Customer c=null;
 		if(newc.equals("1"))
 		{
+			c=new Customer();
 			System.out.println("Create your username");
 			c.username=s.nextLine();
 			System.out.println("Create a password");
 			c.password=s.nextLine();
+			functionality(c);
+			Admin.add_to_file(c);
 		}
+		else
+		{
+			FileInputStream fileInput;
+			try {
+				fileInput = new FileInputStream("./src/project0/serialization.ser");
+				ObjectInputStream in=new ObjectInputStream(fileInput);
+				c=(Customer)in.readObject();
+				in.close();
+				fileInput.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
 		int counter=0;
 		do
 		{
@@ -33,7 +61,7 @@ public class Customer implements Serializable{
 		{
 			System.out.println("Login success");
 			functionality(c);
-			add_to_file(c);
+			Admin.add_to_file(c);
 			return;
 		}
 		else
@@ -42,6 +70,7 @@ public class Customer implements Serializable{
 			counter++;
 		}
 		}while(counter<15);
+		}
 	}
     public static void functionality(Customer c)
 	 {
@@ -89,21 +118,7 @@ public class Customer implements Serializable{
 		 }
 	 }
 	
-	public static void add_to_file(Customer c)
-	{
-		try
-		{
-			FileOutputStream fileOut=new FileOutputStream("./src/project0/serialization.ser");
-			ObjectOutputStream out=new ObjectOutputStream(fileOut);
-			out.writeObject(c);
-			out.close();
-			fileOut.close();
-		}
-		catch(IOException ex)
-		{
-			ex.printStackTrace();
-		}
-	}
+	
 	
 
 }

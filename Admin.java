@@ -1,31 +1,33 @@
 package project0;
 
-import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Admin extends Employee{
 	
-	public static void functionality(Customer c)
-	 {
-		 Scanner s=new Scanner(System.in);
-		 System.out.println("Would you like to set up a new account, deposit into existing account or withdraw from existing account?");
-		 String action=s.nextLine(); 
-		 switch(action)
-		 {
-		    case "Deposit":
-		    {
-			   if(c.numaccounts==0)
-			   {
-				   System.out.println("Cannot deposit at this time");
-			   }
-			   else
-			   {
-				  
-			   }
-		    }
-		 }
-	 }
-    public static void implement_account_change(Customer c)
+    public static void implement_account_change(Customer c,Request r)
     {
+    	if(r.amount==0)
+    	{
+    		c.numaccounts++;
+    	    c.accounts.put(c.numaccounts, 0);
+    	}
     	
     }
+    public static void add_to_file(Customer c)
+	{
+		try
+		{
+			FileOutputStream fileOut=new FileOutputStream("./src/project0/serialization.ser");
+			ObjectOutputStream out=new ObjectOutputStream(fileOut);
+			out.writeObject(c);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 }
