@@ -32,12 +32,10 @@ public class Employee extends Customer implements Serializable{
     		 String name="";
     		 String type="";
     		 System.out.println("What is the name of the person on the request?");
-    		 name=s.nextLine();
+    		 name=s.next();
     		 System.out.println("What is the type of the account?");
-    		 type=s.nextLine();
-    		 System.out.println("What is the id of the account?");
-    		 int id=s.nextInt();
-    		 approve_requests(type,id,name);
+    		 type=s.next();
+    		 approve_requests(type,name);
     		 break;
     	  case 3:
     		  Account.displayCustomers();
@@ -117,7 +115,6 @@ public class Employee extends Customer implements Serializable{
 			{
 				System.out.println("Login success");
 				Employee.functionality();
-				Account.add_customerto_file(itr.next());
 				return;
 			}
 		}
@@ -126,7 +123,7 @@ public class Employee extends Customer implements Serializable{
 		
 		}while(counter<15);
 		}
-	 public static void approve_requests(String t, int id,String name)
+	 public static void approve_requests(String t,String name)
 	 {
 		 FileInputStream fileInput;
 	    	ArrayList<Request> c=null;
@@ -147,18 +144,16 @@ public class Employee extends Customer implements Serializable{
 				e.printStackTrace();
 			}
 		 Scanner s=new Scanner(System.in);
-		 
-		 Iterator<Request> itr=c.iterator();
-	    	while(itr.hasNext())
+		 for(int i=0;i<c.size();i++)
 	    	{
-	    		Request request=itr.next();
-	    		if(request.type.equals(t)&&request.id==id&&request.name.equals(name))
+	    		if(c.get(i).type.equals(t)&&c.get(i).name.equals(name))
 	    		{
 	    		System.out.println("Would you like to approve this request?\n Type y for yes, Type n for no");
 	    		String a=s.nextLine();
 	    		if(a.equals("y"))
-	    		   Request.add_account(request);
-	    		itr.remove();
+	    		   Request.add_account(c.get(i));
+	    		c.remove(i);
+	    		break;
 	    		}
 	    	}
 	 }

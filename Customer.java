@@ -68,6 +68,7 @@ public class Customer implements Serializable{
 		System.out.println("Create a password");
 		c.password=s.nextLine();
 		c.functionality(c);
+		Account.add_customerto_file(c);
 		
     }
     public void functionality(Customer c)
@@ -77,7 +78,7 @@ public class Customer implements Serializable{
 		 do
 		 {
 		 System.out.println("1: New account,\n2: Deposit into existing account,\n3: Withdraw from existing account\n4: Transfer between accounts\n5: Apply for joint account");
-		 action=s.nextLine();
+		 action=s.next();
 		 
 		   switch(action)
 		   {
@@ -86,7 +87,6 @@ public class Customer implements Serializable{
 		    	String t=s.nextLine();
 		    	System.out.println("Your request has been sent");
 		    	Employee.add_to_accountrequests(c,t);
-		    	Account.add_customerto_file(c);
 		    	break;
 		    
 		    case "2":
@@ -99,14 +99,13 @@ public class Customer implements Serializable{
 			   {
 				 
 				 System.out.println("Which account are you depositing to?");
-				 String ac=s.nextLine();
+				 String ac=s.next();
 				 System.out.println("How much would you like to deposit?");
 				 double amount=s.nextDouble();
 				 for(Map.Entry<Integer,Account> m:c.accounts.entrySet())
 					{
 						if(m.getValue().type.equals(ac))
 						{
-							
 							m.getValue().amount+=amount;
 							break;
 						}
@@ -126,7 +125,7 @@ public class Customer implements Serializable{
 		    		System.out.println("How much would you like to withdraw?");
 					 double amount=s.nextDouble();
 					 System.out.println("Which account are you withdrawing from?");
-					 String ac=s.nextLine();
+					 String ac=s.next();
 					 for(Map.Entry<Integer,Account> m:c.accounts.entrySet())
 						{
 							if(m.getValue().type.equals(ac))

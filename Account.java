@@ -21,10 +21,18 @@ public class Account implements Serializable{
 	   ArrayList<Customer>list=null;
 	   try {
 		fileInput = new FileInputStream("./src/project0/serialization.ser");
-		ObjectInputStream in=new ObjectInputStream(fileInput);
-		list=(ArrayList<Customer>)in.readObject();
-		in.close();
-		fileInput.close();
+		if(fileInput.available()==0)
+		{
+			list=new ArrayList<Customer>();
+		}
+		else
+		{
+			ObjectInputStream in=new ObjectInputStream(fileInput);
+			list=(ArrayList<Customer>)in.readObject();
+			in.close();
+			fileInput.close();
+		}
+		
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -35,10 +43,14 @@ public class Account implements Serializable{
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	   if(list==null)
-	   {
-		   list=new ArrayList<Customer>();
-	   }
+	    for(int i=0;i<list.size();i++)
+	    {
+	    	if(c.username.equals(list.get(i).username))
+	    	{
+	    		list.remove(i);
+	    		break;
+	    	}
+	    }
     	list.add(c);
 		try
 		{

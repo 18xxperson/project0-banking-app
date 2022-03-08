@@ -28,19 +28,17 @@ public class Admin extends Employee{
   	    	  break;
     	  case 2:
     		 System.out.println("What is the name of the person on the request?");
-      		 String name=s.nextLine();
-     		 System.out.println("What is the id of the account?");
-     		 int id=s.nextInt();
+      		 String name=s.next();
      		 System.out.println("What is the type of the account?");
-     		 String type=s.nextLine();
-     		 approve_requests(type,id,name);
+     		 String type=s.next();
+     		 approve_requests(type,name);
      		 break;
      	  case 3:
      		  Account.displayCustomers();
      		  break;
      	  case 4:
      		 System.out.println("What is the name of the person you are accessing?");
-     		 name=s.nextLine();
+     		 name=s.next();
      		FileInputStream fileInput;
         	ArrayList<Customer>list=null;
     		try {
@@ -63,9 +61,10 @@ public class Admin extends Employee{
     	Iterator<Customer> itr=list.iterator();
     	while(itr.hasNext())
     	  {
-    		  if(itr.next().username.equals(name))
+    		  Customer c=itr.next();
+    		  if(c.username.equals(name))
     		  {
-    			  itr.next().functionality(itr.next());
+    			  c.functionality(c);
     			  break;
     		  }
     	  }

@@ -60,14 +60,16 @@ public class Request implements Serializable{
 		Iterator<Customer> itr=list.iterator();
 		while(itr.hasNext())
 		{
-			if(itr.next().username.equals(r.name))
+			Customer c=itr.next();
+			if(c.username.equals(r.name))
 			{
 				Account a=new Account();
 				a.amount=0;
 				a.type=r.type;
-				itr.next().accounts.put(itr.next().numaccounts, a);
-				itr.next().numaccounts++;
-				Account.add_customerto_file(itr.next());
+				c.accounts.put(c.numaccounts, a);
+				c.numaccounts++;
+				System.out.println("Account successfully created");
+				Account.add_customerto_file(c);
 				return;
 			}
 		}
