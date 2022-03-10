@@ -47,9 +47,7 @@ public class Employee extends Customer implements Serializable{
 	  public static void add_to_accountrequests(Customer c,String t)
 	  {
 		    Request r=new Request();
-	    	r.id=c.numaccounts;
 	    	r.name=c.username;
-	    	r.id=c.numaccounts;
 	    	r.type=t;
 	    	requests.add(r);
 	    	try
@@ -66,6 +64,28 @@ public class Employee extends Customer implements Serializable{
 			}
 	  }
 	 
+	  public static void add_joint_accountrequests(Customer c,String t,String n)
+	  {
+		   JointRequest r=new JointRequest();
+	    	r.name=c.username;
+	    	r.type="joint";
+	    	r.name2=n;
+	    	r.jointtype=t;
+	    	requests.add(r);
+	    	try
+			{
+				FileOutputStream fileOut=new FileOutputStream("./src/project0/requests.ser");
+				ObjectOutputStream out=new ObjectOutputStream(fileOut);
+				out.writeObject(requests);
+				out.close();
+				fileOut.close();
+			}
+			catch(IOException ex)
+			{
+				ex.printStackTrace();
+			}
+	  }
+	  
 	  public static void create_account()
 	    {
 	    	Scanner s=new Scanner(System.in);
@@ -151,7 +171,18 @@ public class Employee extends Customer implements Serializable{
 	    		System.out.println("Would you like to approve this request?\n Type y for yes, Type n for no");
 	    		String a=s.nextLine();
 	    		if(a.equals("y"))
-	    		   Request.add_account(c.get(i));
+	    		{
+	    			if(t.equals("joint"))
+	    			{
+	    				JointRequest.add_account(c.get(i));
+	    			}
+	    			else
+	    			{
+	    				Request.add_account(c.get(i));
+	    			}
+	    			
+	    		}
+	    		   
 	    		c.remove(i);
 	    		break;
 	    		}

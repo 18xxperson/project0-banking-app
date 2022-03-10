@@ -90,9 +90,8 @@ public class Account implements Serializable{
 	    	while(itr.hasNext())
 	    	{
 	    		Request a1=itr.next();
-	    		System.out.println(a1.id);
-	    		System.out.println(a1.name);
-	    		System.out.println(a1.type);
+	    		System.out.println("Name :"+a1.name);
+	    		System.out.println(a1.type +"account");
 	    		
 	    	}
    }
@@ -121,11 +120,11 @@ public class Account implements Serializable{
    	while(itr.hasNext())
    	{
    		Customer c1=itr.next();
-   		System.out.println(c1.username);
-   		System.out.println(c1.numaccounts);
+   		System.out.println("Name :"+c1.username);
+   		System.out.println("Number of accounts"+c1.numaccounts);
    		for(Map.Entry<Integer,Account> m:c1.accounts.entrySet())
 		{
-			System.out.println(m.getValue().amount);
+			System.out.println("$"+m.getValue().amount);
 			System.out.println(m.getValue().type);
 		}
    	}

@@ -84,7 +84,7 @@ public class Customer implements Serializable{
 		   {
 		    case "1":
 		    	System.out.println("What type of account would you like?");
-		    	String t=s.nextLine();
+		    	String t=s.next();
 		    	System.out.println("Your request has been sent");
 		    	Employee.add_to_accountrequests(c,t);
 		    	break;
@@ -107,6 +107,7 @@ public class Customer implements Serializable{
 						if(m.getValue().type.equals(ac))
 						{
 							m.getValue().amount+=amount;
+							System.out.println(m.getValue().type+"Account now has"+m.getValue().amount);
 							break;
 						}
 					}
@@ -133,6 +134,7 @@ public class Customer implements Serializable{
 								if(m.getValue().amount>=amount)
 								{
 									m.getValue().amount-=amount;
+									System.out.println(m.getValue().type+"Account now has"+m.getValue().amount);
 								}
 								else
 								{
@@ -171,7 +173,9 @@ public class Customer implements Serializable{
 									if(m.getValue().amount>=amount)
 									{
 										m.getValue().amount-=amount;
+										System.out.println(m.getValue().type+"Account now has"+m.getValue().amount);
 										a1.amount+=amount;
+										
 									}
 									else
 									{
@@ -190,6 +194,7 @@ public class Customer implements Serializable{
 									if(a1.amount>=amount)
 									{
 										m.getValue().amount+=amount;
+										System.out.println(m.getValue().type+"Account now has"+m.getValue().amount);
 										a1.amount-=amount;
 									}
 									else
@@ -199,16 +204,26 @@ public class Customer implements Serializable{
 								}
 							}
 						}
+					 for(Map.Entry<Integer,Account> m:c.accounts.entrySet())
+					 {
+						 if(m.getValue().type.equals(a1.type));
+						 {
+							 m.getValue().amount=a1.amount;
+							 System.out.println(m.getValue().type+"Account now has"+m.getValue().amount);
+						 }
+					 }
+					 Account.add_customerto_file(c);
 					 
 		    	}
 		    case "5":
 		    	System.out.println("Who is the person joining with?");
-		    	String name=s.nextLine();
+		    	String name=s.next();
 		    	System.out.println("What type is in the joint account");
-		    	String type=s.nextLine();
+		    	String type=s.next();
+		    	Employee.add_joint_accountrequests(c, type, name);
 		    	break;
 		    
 		    }
-		 }while(action.equals("1")||action.equals("2")||action.equals("3")||action.equals("4"));
+		 }while(action.equals("1")||action.equals("2")||action.equals("3")||action.equals("4")||action.equals("5"));
 	 }
 }

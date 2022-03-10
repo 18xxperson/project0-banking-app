@@ -19,7 +19,7 @@ public class Admin extends Employee{
     	int action=0;
     	do
     	{
-    	  System.out.println("1:Display all requests\n2:Look at specific request\n3:Display all customers\n4:Modify a customer's accounts");
+    	  System.out.println("1:Display all requests\n2:Look at specific request\n3:Display all customers\n4:Modify a customer's accounts\n5: Get rid of someone's account");
     	  action=s.nextInt();
     	  switch(action)
     	  {
@@ -69,8 +69,44 @@ public class Admin extends Employee{
     		  }
     	  }
     	break;
+     	  case 5:
+     		 System.out.println("What is the name of the person you are accessing?");
+     		 name=s.next();
+     		FileInputStream fileInputs;
+        	ArrayList<Customer>list1=null;
+    		try {
+    			fileInputs = new FileInputStream("./src/project0/serialization.ser");
+    			ObjectInputStream in=new ObjectInputStream(fileInputs);
+    			list1=(ArrayList<Customer>)in.readObject();
+    			in.close();
+    			fileInputs.close();
+    		} catch (FileNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ClassNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		
+    	Iterator<Customer> itr1=list1.iterator();
+    	while(itr1.hasNext())
+    	{
+    		Customer c=itr1.next();
+  		  if(c.username.equals(name))
+  		  {
+  			  System.out.println("Which account is being removed?");
+  			  String t=s.next();
+  			  Login.removeAccount(c, t);
+  			  break;
+  		  }
     	}
-    	}while(action==1||action==2||action==3||action==4);
+    	break;
+    	}
+ 
+    	}while(action==1||action==2||action==3||action==4||action==5);
     }
     
     public static void create_account()

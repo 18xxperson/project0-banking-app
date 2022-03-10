@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Request implements Serializable{
-   int id=0;
    String name="";
    String type="";
    public static boolean test_inputs(String user,String password,Customer c)
